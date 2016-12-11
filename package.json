@@ -30,7 +30,25 @@
           "description": "ROS distro name to use (kinetic, jade, ...)"
         }
       }
-    }
+    },
+    "languages": [
+      {
+        "id": "xml",
+        "extensions": [
+          "launch",
+          "srdf",
+          "test",
+          "urdf",
+          "xacro"
+        ]
+      },
+      {
+        "id": "yaml",
+        "extensions": [
+          "rviz"
+        ]
+      }
+    ]
   },
   "scripts": {
     "compile": "tsc -watch -p ./",
