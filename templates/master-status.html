@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  <h1>ROS Master Status</h1>
+
+  <% if (status) { %>
+    <h2>Topics</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Publishers</th>
+          <th>Subscribers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const name of _.union(Object.keys(publishers), Object.keys(subscribers))) { %>
+          <tr>
+            <td><%- name %></td>
+            <td><%- _.has(publishers, name) ? publishers[name].join(", ") : "" %></td>
+            <td><%- _.has(subscribers, name) ? subscribers[name].join(", ") : "" %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <h2>Services</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Providers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const [name, providers] of _.pairs(services)) { %>
+          <tr>
+            <td><%- name %></td>
+            <td><%- services[name].join(", ") %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>The ROS master is not running.</p>
+  <% } %>
+</body>
+</html>
