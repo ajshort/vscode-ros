@@ -1,3 +1,12 @@
+<%
+function formatParamValue(value) {
+  if (_.isString(value) && value.length > 80) {
+    return _.escape(value.substr(0, 80)) + "&hellip;";
+  } else {
+    return _.escape(value.toString());
+  }
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +16,25 @@
   <h1>ROS Master Status</h1>
 
   <% if (status) { %>
+    <h2>Parameters</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const [name, value] of _.pairs(params)) { %>
+          <tr>
+            <td><%- name %></td>
+            <td><%= formatParamValue(value) %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
     <h2>Topics</h2>
 
     <table>

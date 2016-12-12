@@ -52,6 +52,34 @@ export class XmlRpcApi {
     });
   }
 
+  public getParamNames(): Promise<string[]> {
+    return this.methodCall("getParamNames");
+  }
+
+  public getParam(name: string): Promise<any> {
+    return this.methodCall("getParam", name);
+  }
+
+  /**
+   * Performs a multicall and returns the full result arrays.
+   */
+  public multicall(methods: any[]): Promise<any> {
+    const multicall = methods.map((method: any[]) => ({
+      methodName: method[0],
+      params: [CALLER_ID, ...method.slice(1)],
+    }));
+
+    return new Promise((resolve, reject) => {
+      this.client.methodCall("system.multicall", [multicall], (err, val) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(val.map(response => response[0]));
+        }
+      });
+    });
+  }
+
   private methodCall(method: string, ...args: any[]) {
     return new Promise((resolve, reject) => {
       this.client.methodCall(method, [CALLER_ID, ...args], (err, val) => {
@@ -124,7 +152,12 @@ export class StatusDocumentProvider implements vscode.TextDocumentContentProvide
 
     if (status) {
       const state = await this.api.getSystemState();
-      data = { ...data, ...state };
+
+      const names = await this.api.getParamNames();
+      const multicall = await this.api.multicall(names.map(name => ["getParam", name]));
+      const params = _.object(names, multicall.map(result => result[2]));
+
+      data = { ...data, ...state, params };
     }
 
     return template(data);
