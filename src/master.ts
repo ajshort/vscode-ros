@@ -37,19 +37,11 @@ export class XmlRpcApi {
   }
 
   public getSystemState(): Promise<ISystemState> {
-    return this.methodCall("getSystemState").then(result => {
-      // Transforms from [[a, [b, c, ...]], ...] to { a: [b, c, ...], ... }.
-      const transform = (items: any[]) => items.reduce((obj, arr) => {
-        obj[arr[0]] = arr[1];
-        return obj;
-      }, {});
-
-      return {
-        publishers: transform(result[0]),
-        subscribers: transform(result[1]),
-        services: transform(result[2]),
-      };
-    });
+    return this.methodCall("getSystemState").then(res => ({
+      publishers: _.object(res[0]),
+      services: _.object(res[2]),
+      subscribers: _.object(res[1]),
+    }));
   }
 
   public getParamNames(): Promise<string[]> {
