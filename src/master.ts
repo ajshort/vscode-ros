@@ -116,11 +116,11 @@ export class StatusDocumentProvider implements vscode.TextDocumentContentProvide
   }
 
   public async provideTextDocumentContent(uri: vscode.Uri, token: vscode.CancellationToken) {
-    const templateFilename = this.context.asAbsolutePath("templates/master-status.html");
+    const templateFilename = this.context.asAbsolutePath("templates/master-status.ejs");
     const template = _.template(await pfs.readFile(templateFilename, "utf-8"));
 
     let status = await this.api.check();
-    let data = <any> { status };
+    let data = <any> { status, context: this.context };
 
     if (status) {
       const state = await this.api.getSystemState();

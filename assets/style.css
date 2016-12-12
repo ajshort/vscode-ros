@@ -1,0 +1,28 @@
+body {
+  padding-right: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table thead {
+  background: #333;
+}
+
+table th {
+  text-align: left;
+}
+
+table td, table th {
+  padding: 6px;
+}
+
+table tbody tr {
+  border-bottom: 1px solid #333;
+}
+
+table tbody tr:hover {
+  background: #222;
+}
