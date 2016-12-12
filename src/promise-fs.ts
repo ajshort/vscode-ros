@@ -4,6 +4,10 @@ function call(fn: Function, ...args: any[]): Promise<any> {
   return new Promise((c, e) => fn(...args, (err, res) => err ? e(err) : c(res)));
 }
 
+export function exists(path: string): Promise<boolean> {
+  return new Promise(c => fs.exists(path, c));
+}
+
 export function readFile(filename: string, encoding: string): Promise<string>;
 export function readFile(filename: string): Promise<Buffer>;
 
