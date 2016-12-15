@@ -14,3 +14,7 @@ export function readFile(filename: string): Promise<Buffer>;
 export function readFile(filename: string, encoding?: string) {
   return call(fs.readFile, ...arguments);
 }
+
+export function readdir(path: string): Promise<string[]> {
+  return call(fs.readdir, path);
+}
