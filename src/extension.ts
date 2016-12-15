@@ -4,6 +4,8 @@ import * as pfs from "./promise-fs";
 import * as utils from "./utils";
 import * as vscode from "vscode";
 
+let context: vscode.ExtensionContext;
+
 /**
  * The catkin workspace base dir.
  */
@@ -14,8 +16,21 @@ export let baseDir: string;
  */
 export let env: any;
 
-export async function activate(context: vscode.ExtensionContext) {
+let onEnvChanged = new vscode.EventEmitter<void>();
+
+/**
+ * Triggered when the env is soured.
+ */
+export let onDidChangeEnv = onEnvChanged.event;
+
+/**
+ * Subscriptions to dispose when the environment is changed.
+ */
+let subscriptions = <vscode.Disposable[]> [];
+
+export async function activate(ctx: vscode.ExtensionContext) {
   // Activate if we're in a catkin workspace.
+  context = ctx;
   baseDir = await utils.findCatkinWorkspace(vscode.workspace.rootPath);
 
   if (!baseDir) {
@@ -26,6 +41,9 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(constants.CMD_SHOW_MASTER_STATUS, master.showMasterStatus),
   );
+
+  // Activate components when the ROS env is changed.
+  context.subscriptions.push(onDidChangeEnv(activateEnvironment));
 
   // Source the environment, and re-source on config change.
   let config = utils.getConfig();
@@ -45,6 +63,34 @@ export async function activate(context: vscode.ExtensionContext) {
   sourceRosAndWorkspace();
 }
 
+export function deactivate() {
+  subscriptions.forEach(disposable => disposable.dispose());
+}
+
+/**
+ * Activates components which require a ROS env.
+ */
+function activateEnvironment() {
+  // Clear existing disposables.
+  while (subscriptions.length > 0) {
+    subscriptions.pop().dispose();
+  }
+
+  if (typeof env.ROS_ROOT === "undefined") {
+    return;
+  }
+
+  // Set up the master.
+  const masterApi = new master.XmlRpcApi(env.ROS_MASTER_URI);
+  const masterStatusItem = new master.StatusBarItem(masterApi);
+  const masterStatusProvider = new master.StatusDocumentProvider(context, masterApi);
+
+  masterStatusItem.activate();
+
+  subscriptions.push(masterStatusItem);
+  subscriptions.push(vscode.workspace.registerTextDocumentContentProvider("ros-master", masterStatusProvider));
+}
+
 /**
  * Loads the ROS environment, and prompts the user to select a distro if required.
  */
@@ -59,7 +105,6 @@ async function sourceRosAndWorkspace(): Promise<void> {
       env = await utils.sourceSetupFile(`/opt/ros/${distro}/setup.bash`, {});
     } catch (err) {
       vscode.window.showErrorMessage(`Could not source the setup file for ROS distro "${distro}".`);
-      return;
     }
   } else if (typeof process.env.ROS_ROOT !== "undefined") {
     env = process.env;
@@ -70,18 +115,19 @@ async function sourceRosAndWorkspace(): Promise<void> {
     if (await vscode.window.showErrorMessage(message, configure) === configure) {
       config.update("distro", await vscode.window.showQuickPick(utils.getDistros()));
     }
-
-    return;
   }
 
   // Source the workspace setup over the top.
   const workspaceSetup = `${baseDir}/devel/setup.bash`;
 
-  if (await pfs.exists(workspaceSetup)) {
+  if (env && typeof env.ROS_ROOT !== "undefined" && await pfs.exists(workspaceSetup)) {
     try {
       env = await utils.sourceSetupFile(workspaceSetup, env);
     } catch (err) {
       vscode.window.showWarningMessage("Could not source the workspace setup file.");
     }
   }
+
+  // Notify listeners the environment has changed.
+  onEnvChanged.fire();
 }
