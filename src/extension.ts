@@ -1,21 +1,26 @@
+import * as pfs from "./promise-fs";
 import * as utils from "./utils";
 import * as vscode from "vscode";
 
+/**
+ * The catkin workspace base dir.
+ */
+export let baseDir: string;
+
 export async function activate(context: vscode.ExtensionContext) {
-  const baseDir = await utils.findCatkinWorkspace(vscode.workspace.rootPath);
+  // Activate if we're in a catkin workspace.
+  baseDir = await utils.findCatkinWorkspace(vscode.workspace.rootPath);
 
   if (!baseDir) {
     return;
   }
-
-  setup();
 }
 
 /**
  * Loads the ROS environment, and prompts the user to select a distro if required.
  */
-async function setup() {
-  let env = {};
+async function sourceRosAndWorkspace(): Promise<any> {
+  let env: any;
 
   const config = utils.getConfig();
   const distro = config.get("distro", "");
@@ -39,4 +44,17 @@ async function setup() {
 
     return;
   }
+
+  // Source the workspace setup over the top.
+  const workspaceSetup = `${baseDir}/devel/setup.bash`;
+
+  if (await pfs.exists(workspaceSetup)) {
+    try {
+      env = await utils.sourceSetupFile(workspaceSetup, env);
+    } catch (err) {
+      vscode.window.showWarningMessage("Could not source the workspace setup file.");
+    }
+  }
+
+  return env;
 }
