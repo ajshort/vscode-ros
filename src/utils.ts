@@ -1,5 +1,13 @@
 import * as pfs from "./promise-fs";
 import { dirname } from "path";
+import * as vscode from "vscode";
+
+/**
+ * Gets the ROS config section.
+ */
+export function getConfig(): vscode.WorkspaceConfiguration {
+  return vscode.workspace.getConfiguration("ros");
+}
 
 /**
  * Traverses up directories to find a catkin workspace.
