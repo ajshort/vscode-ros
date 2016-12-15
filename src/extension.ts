@@ -7,6 +7,11 @@ import * as vscode from "vscode";
  */
 export let baseDir: string;
 
+/**
+ * The sourced ROS environment.
+ */
+export let env: any;
+
 export async function activate(context: vscode.ExtensionContext) {
   // Activate if we're in a catkin workspace.
   baseDir = await utils.findCatkinWorkspace(vscode.workspace.rootPath);
@@ -14,13 +19,30 @@ export async function activate(context: vscode.ExtensionContext) {
   if (!baseDir) {
     return;
   }
+
+  // Source the environment, and re-source on config change.
+  let config = utils.getConfig();
+
+  context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(() => {
+    const updatedConfig = utils.getConfig();
+    const fields = Object.keys(config).filter(k => !(config[k] instanceof Function));
+    const changed = fields.some(key => updatedConfig[key] !== config[key]);
+
+    if (changed) {
+      sourceRosAndWorkspace();
+    }
+
+    config = updatedConfig;
+  }));
+
+  sourceRosAndWorkspace();
 }
 
 /**
  * Loads the ROS environment, and prompts the user to select a distro if required.
  */
-async function sourceRosAndWorkspace(): Promise<any> {
-  let env: any;
+async function sourceRosAndWorkspace(): Promise<void> {
+  env = undefined;
 
   const config = utils.getConfig();
   const distro = config.get("distro", "");
@@ -55,6 +77,4 @@ async function sourceRosAndWorkspace(): Promise<any> {
       vscode.window.showWarningMessage("Could not source the workspace setup file.");
     }
   }
-
-  return env;
 }
