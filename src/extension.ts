@@ -1,3 +1,5 @@
+import * as constants from "./constants";
+import * as master from "./master";
 import * as pfs from "./promise-fs";
 import * as utils from "./utils";
 import * as vscode from "vscode";
@@ -19,6 +21,11 @@ export async function activate(context: vscode.ExtensionContext) {
   if (!baseDir) {
     return;
   }
+
+  // Register commands.
+  context.subscriptions.push(
+    vscode.commands.registerCommand(constants.CMD_SHOW_MASTER_STATUS, master.showMasterStatus),
+  );
 
   // Source the environment, and re-source on config change.
   let config = utils.getConfig();
