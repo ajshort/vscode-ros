@@ -1,4 +1,5 @@
 import * as constants from "./constants";
+import CppFormatter from "./cpp-formatter";
 import * as master from "./master";
 import * as pfs from "./promise-fs";
 import * as utils from "./utils";
@@ -39,6 +40,11 @@ export async function activate(ctx: vscode.ExtensionContext) {
 
   // Activate components when the ROS env is changed.
   context.subscriptions.push(onDidChangeEnv(activateEnvironment));
+
+  // Activate components which don't require the ROS env.
+  context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(
+    "cpp", new CppFormatter()
+  ));
 
   // Source the environment, and re-source on config change.
   let config = utils.getConfig();
