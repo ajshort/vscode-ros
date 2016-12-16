@@ -104,6 +104,11 @@
                 "description": "The launch file or executable name",
                 "default": ""
               },
+              "args": {
+                "type": "array",
+                "description": "Arguments to pass to the launch or run command",
+                "default": []
+              },
               "debugSettings": {
                 "type": "string",
                 "description": "The stringified debug settings",
