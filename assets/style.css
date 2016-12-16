@@ -26,3 +26,11 @@ table tbody tr {
 table tbody tr:hover {
   background: #222;
 }
+
+#params .name {
+  font-weight: bold;
+}
+
+#params ul {
+  padding-left: 20px;
+}

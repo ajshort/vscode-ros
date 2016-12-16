@@ -1,4 +1,13 @@
 <%
+function formatParams(params) {
+  const items = _.pairs(params).reduce((str, [name, val]) => {
+    const formatted = _.isObject(val) ? formatParams(val) : formatParamValue(val);
+    return str + `<li><span class="name">${_.escape(name)}</span> ${formatted}</li>`;
+  }, "");
+
+  return `<ul>${items}</ul>`;
+}
+
 function formatParamValue(value) {
   if (_.isString(value) && value.length > 80) {
     return _.escape(value.substr(0, 80)) + "&hellip;";
@@ -18,22 +27,9 @@ function formatParamValue(value) {
   <% if (status) { %>
     <h2>Parameters</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% for (const [name, value] of _.pairs(params)) { %>
-          <tr>
-            <td><%- name %></td>
-            <td><%= formatParamValue(value) %></td>
-          </tr>
-        <% } %>
-      </tbody>
-    </table>
+    <div id="params">
+      <%= formatParams(params) %>
+    </div>
 
     <h2>Topics</h2>
 
