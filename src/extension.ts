@@ -110,6 +110,7 @@ function activateEnvironment() {
     vscode.commands.registerCommand(constants.CMD_STOP_CORE, () => master.stopCore(masterApi)),
     vscode.commands.registerCommand(constants.CMD_UPDATE_BUILD_TASKS, build.updateBuildTasks),
     vscode.commands.registerCommand(constants.CMD_UPDATE_CPP_PROPERTIES, build.updateCppProperties),
+    vscode.commands.registerCommand(constants.CMD_UPDATE_PYTHON_PATH, build.updatePythonPath),
   );
 
   // Generate config files if they don't already exist.

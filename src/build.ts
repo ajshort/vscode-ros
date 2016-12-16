@@ -3,17 +3,27 @@ import * as pfs from "./promise-fs";
 import * as utils from "./utils";
 import * as vscode from "vscode";
 
+const PYTHON_AUTOCOMPLETE_PATHS = "python.autoComplete.extraPaths";
+
 /**
  * Creates config files which don't exist.
  */
-export async function createConfigFiles() {
-  if (!vscode.workspace.getConfiguration().has("tasks")) {
+export function createConfigFiles() {
+  const config = vscode.workspace.getConfiguration();
+
+  if (!config.has("tasks")) {
     updateBuildTasks();
   }
 
-  if (!await pfs.exists(vscode.workspace.rootPath + "/.vscode/c_cpp_properties.json")) {
-    updateCppProperties();
+  if (config.get(PYTHON_AUTOCOMPLETE_PATHS, []).length === 0) {
+    updatePythonPath();
   }
+
+  pfs.exists(vscode.workspace.rootPath + "/.vscode/c_cpp_properties.json").then(exists => {
+    if (!exists) {
+      updateCppProperties();
+    }
+  });
 }
 
 /**
@@ -58,4 +68,11 @@ export async function updateCppProperties(): Promise<void> {
       },
     ],
   }, undefined, 2));
+}
+
+/**
+ * Updates the python autocomplete path to support ROS.
+ */
+export function updatePythonPath() {
+  vscode.workspace.getConfiguration().update(PYTHON_AUTOCOMPLETE_PATHS, extension.env.PYTHONPATH.split(":"));
 }

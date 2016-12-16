@@ -51,6 +51,11 @@
         "category": "ROS",
         "command": "ros.updateCppProperties",
         "title": "Update C++ Properties"
+      },
+      {
+        "category": "ROS",
+        "command": "ros.updatePythonPath",
+        "title": "Update Python Path"
       }
     ],
     "configuration": {
