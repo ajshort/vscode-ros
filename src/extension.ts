@@ -62,6 +62,12 @@ export async function activate(ctx: vscode.ExtensionContext) {
   }));
 
   sourceRosAndWorkspace();
+
+  return {
+    getBaseDir: () => baseDir,
+    getEnv: () => env,
+    onDidChangeEnv: (listener: () => any, thisArg: any) => onDidChangeEnv(listener, thisArg),
+  };
 }
 
 export function deactivate() {
