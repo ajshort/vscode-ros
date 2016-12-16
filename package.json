@@ -24,6 +24,11 @@
     "commands": [
       {
         "category": "ROS",
+        "command": "ros.createCatkinPackage",
+        "title": "Create Catkin Package"
+      },
+      {
+        "category": "ROS",
         "command": "ros.createLaunchConfiguration",
         "title": "Create Launch Configuration"
       },
@@ -117,7 +122,15 @@
           "rviz"
         ]
       }
-    ]
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "ros.createCatkinPackage",
+          "when": "explorerResourceIsFolder"
+        }
+      ]
+    }
   },
   "scripts": {
     "compile": "tsc -watch -p ./",

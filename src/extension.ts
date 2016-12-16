@@ -1,3 +1,4 @@
+import * as catkin from "./catkin";
 import * as constants from "./constants";
 import CppFormatter from "./cpp-formatter";
 import * as debug from "./debug";
@@ -100,6 +101,7 @@ function activateEnvironment() {
 
   // Register commands.
   subscriptions.push(
+    vscode.commands.registerCommand(constants.CMD_CREATE_CATKIN_PACKAGE, catkin.createPackage),
     vscode.commands.registerCommand(constants.CMD_GET_DEBUG_SETTINGS, debug.getDebugSettings),
     vscode.commands.registerCommand(constants.CMD_PROVIDE_INITIAL_CONFIGURATIONS, debug.provideInitialConfigurations),
     vscode.commands.registerCommand(constants.CMD_SHOW_MASTER_STATUS, master.showMasterStatus),
