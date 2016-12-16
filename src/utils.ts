@@ -69,6 +69,15 @@ export function getPackages(): Promise<{ [name: string]: string }> {
 }
 
 /**
+ * Gets include dirs using `catkin_find`.
+ */
+export function getIncludeDirs(): Promise<string[]> {
+  return new Promise((c, e) => cp.exec("catkin_find --include", { env: extension.env }, (err, out) =>
+    err ? e(err) : c(out.trim().split("\n"))
+  ));
+}
+
+/**
  * Gets the full path to any executables for a package.
  */
 export function findPackageExecutables(packageName: string): Promise<string[]> {

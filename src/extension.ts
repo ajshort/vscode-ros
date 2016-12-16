@@ -109,12 +109,11 @@ function activateEnvironment() {
     vscode.commands.registerCommand(constants.CMD_START_CORE, master.startCore),
     vscode.commands.registerCommand(constants.CMD_STOP_CORE, () => master.stopCore(masterApi)),
     vscode.commands.registerCommand(constants.CMD_UPDATE_BUILD_TASKS, build.updateBuildTasks),
+    vscode.commands.registerCommand(constants.CMD_UPDATE_CPP_PROPERTIES, build.updateCppProperties),
   );
 
   // Generate config files if they don't already exist.
-  if (!vscode.workspace.getConfiguration().has("tasks")) {
-    build.updateBuildTasks();
-  }
+  build.createConfigFiles();
 }
 
 /**

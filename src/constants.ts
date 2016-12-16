@@ -5,3 +5,4 @@ export const CMD_SHOW_MASTER_STATUS = "ros.showMasterStatus";
 export const CMD_START_CORE = "ros.startCore";
 export const CMD_STOP_CORE = "ros.stopCore";
 export const CMD_UPDATE_BUILD_TASKS = "ros.updateBuildTasks";
+export const CMD_UPDATE_CPP_PROPERTIES = "ros.updateCppProperties";
