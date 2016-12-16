@@ -21,11 +21,23 @@
   ],
   "main": "./out/src/extension",
   "contributes": {
-    "commands": {
-      "category": "ROS",
-      "command": "ros.showMasterStatus",
-      "title": "Show Master Status"
-    },
+    "commands": [
+      {
+        "category": "ROS",
+        "command": "ros.showMasterStatus",
+        "title": "Show Master Status"
+      },
+      {
+        "category": "ROS",
+        "command": "ros.startCore",
+        "title": "Start Core"
+      },
+      {
+        "category": "ROS",
+        "command": "ros.stopCore",
+        "title": "Stop Core"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "ROS",

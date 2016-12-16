@@ -1,8 +1,24 @@
 import * as constants from "./constants";
+import * as extension from "./extension";
 import * as pfs from "./promise-fs";
+import * as cp from "child_process";
 import * as _ from "underscore";
 import * as vscode from "vscode";
 import * as xmlrpc from "xmlrpc";
+
+/**
+ * Spawns a new roscore process.
+ */
+export function startCore() {
+  cp.spawn("roscore", [], { env: extension.env });
+}
+
+/**
+ * Kills the roscore process.
+ */
+export function stopCore(api: XmlRpcApi) {
+  api.getPid().then(pid => cp.exec(`kill $(ps -o ppid= -p '${pid}')`));
+}
 
 /**
  * Shows the master status in an editor view.

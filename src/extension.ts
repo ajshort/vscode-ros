@@ -37,11 +37,6 @@ export async function activate(ctx: vscode.ExtensionContext) {
     return;
   }
 
-  // Register commands.
-  context.subscriptions.push(
-    vscode.commands.registerCommand(constants.CMD_SHOW_MASTER_STATUS, master.showMasterStatus),
-  );
-
   // Activate components when the ROS env is changed.
   context.subscriptions.push(onDidChangeEnv(activateEnvironment));
 
@@ -89,6 +84,13 @@ function activateEnvironment() {
 
   subscriptions.push(masterStatusItem);
   subscriptions.push(vscode.workspace.registerTextDocumentContentProvider("ros-master", masterStatusProvider));
+
+  // Register commands.
+  subscriptions.push(
+    vscode.commands.registerCommand(constants.CMD_SHOW_MASTER_STATUS, master.showMasterStatus),
+    vscode.commands.registerCommand(constants.CMD_START_CORE, master.startCore),
+    vscode.commands.registerCommand(constants.CMD_STOP_CORE, () => master.stopCore(masterApi))
+  );
 }
 
 /**
