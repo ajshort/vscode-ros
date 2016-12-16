@@ -10,7 +10,7 @@
       "args": ["--extensionDevelopmentPath=${workspaceRoot}"],
       "stopOnEntry": false,
       "sourceMaps": true,
-      "outFiles": ["${workspaceRoot}/out/src"],
+      "outFiles": ["${workspaceRoot}/out/src/**/*.js"],
       "preLaunchTask": "npm"
     },
     {
@@ -22,7 +22,7 @@
       "args": ["--server=4711"],
       "stopOnEntry": false,
       "sourceMaps": true,
-      "outFiles": ["${workspaceRoot}/out/src/debugger"],
+      "outFiles": ["${workspaceRoot}/out/src/**/*.js"],
       "preLaunchTask": "npm"
     },
     {
