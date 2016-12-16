@@ -29,11 +29,6 @@
       },
       {
         "category": "ROS",
-        "command": "ros.createLaunchConfiguration",
-        "title": "Create Launch Configuration"
-      },
-      {
-        "category": "ROS",
         "command": "ros.showMasterStatus",
         "title": "Show Master Status"
       },
@@ -102,6 +97,32 @@
             }
           }
         },
+        "configurationSnippets": [
+          {
+            "label": "ROS: roslaunch",
+            "description": "Runs a launch file using roslaunch",
+            "body": {
+              "type": "ros",
+              "command": "roslaunch",
+              "name": "",
+              "package": "",
+              "target": ".launch",
+              "debugSettings": "${command.debugSettings}"
+            }
+          },
+          {
+            "label": "ROS: rosrun",
+            "description": "Runs an executable using rosrun",
+            "body": {
+              "type": "ros",
+              "command": "rosrun",
+              "name": "",
+              "package": "",
+              "target": "",
+              "debugSettings": "${command.debugSettings}"
+            }
+          }
+        ],
         "initialConfigurations": "ros.provideInitialConfigurations"
       }
     ],

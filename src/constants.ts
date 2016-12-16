@@ -1,4 +1,3 @@
-export const CMD_CREATE_LAUNCH_CONFIGURATION = "ros.createLaunchConfiguration";
 export const CMD_CREATE_CATKIN_PACKAGE = "ros.createCatkinPackage";
 export const CMD_GET_DEBUG_SETTINGS = "ros.getDebugSettings";
 export const CMD_PROVIDE_INITIAL_CONFIGURATIONS = "ros.provideInitialConfigurations";
