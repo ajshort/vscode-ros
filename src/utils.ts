@@ -1,6 +1,8 @@
+import * as extension from "./extension";
 import * as pfs from "./promise-fs";
 import * as cp from "child_process";
 import { dirname } from "path";
+import * as _ from "underscore";
 import * as vscode from "vscode";
 
 /**
@@ -24,13 +26,6 @@ export async function findCatkinWorkspace(dir: string): Promise<string> {
 }
 
 /**
- * Gets the names of installed distros.
- */
-export function getDistros(): Promise<string[]> {
-  return pfs.readdir("/opt/ros");
-}
-
-/**
  * Executes a setup file and returns the resulting env.
  */
 export function sourceSetupFile(filename: string, env?: any): Promise<any> {
@@ -51,4 +46,45 @@ export function sourceSetupFile(filename: string, env?: any): Promise<any> {
       }
     });
   });
+}
+
+/**
+ * Gets the names of installed distros.
+ */
+export function getDistros(): Promise<string[]> {
+  return pfs.readdir("/opt/ros");
+}
+
+/**
+ * Gets a map of package names to paths.
+ */
+export function getPackages(): Promise<{ [name: string]: string }> {
+  return new Promise((resolve, reject) => cp.exec("rospack list", { env: extension.env }, (err, out) => {
+    if (!err) {
+      resolve(_.object(out.trim().split("\n").map(line => line.split(" ", 2))));
+    } else {
+      reject(err);
+    }
+  }));
+}
+
+/**
+ * Gets the full path to any executables for a package.
+ */
+export function findPackageExecutables(packageName: string): Promise<string[]> {
+  const dirs = `catkin_find --without-underlays --libexec --share "${packageName}"`;
+  const command = `find $(${dirs}) -type f -executable`;
+
+  return new Promise((c, e) => cp.exec(command, { env: extension.env }, (err, out) =>
+    err ? e(err) : c(out.trim().split("\n"))
+  ));
+}
+
+/**
+ * Finds all `.launch` files in a directory.
+ */
+export function findLaunchFiles(dir: string): Promise<string[]> {
+  return new Promise((c, e) => cp.exec(`find '${dir}' -type f -name *.launch`, (err, out) => {
+    err ? e(err) : c(out.trim().split("\n"));
+  }));
 }
