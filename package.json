@@ -41,6 +41,11 @@
         "category": "ROS",
         "command": "ros.stopCore",
         "title": "Stop Core"
+      },
+      {
+        "category": "ROS",
+        "command": "ros.updateBuildTasks",
+        "title": "Update Build Tasks"
       }
     ],
     "configuration": {

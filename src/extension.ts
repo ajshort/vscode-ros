@@ -1,3 +1,4 @@
+import * as build from "./build";
 import * as catkin from "./catkin";
 import * as constants from "./constants";
 import CppFormatter from "./cpp-formatter";
@@ -106,8 +107,14 @@ function activateEnvironment() {
     vscode.commands.registerCommand(constants.CMD_PROVIDE_INITIAL_CONFIGURATIONS, debug.provideInitialConfigurations),
     vscode.commands.registerCommand(constants.CMD_SHOW_MASTER_STATUS, master.showMasterStatus),
     vscode.commands.registerCommand(constants.CMD_START_CORE, master.startCore),
-    vscode.commands.registerCommand(constants.CMD_STOP_CORE, () => master.stopCore(masterApi))
+    vscode.commands.registerCommand(constants.CMD_STOP_CORE, () => master.stopCore(masterApi)),
+    vscode.commands.registerCommand(constants.CMD_UPDATE_BUILD_TASKS, build.updateBuildTasks),
   );
+
+  // Generate config files if they don't already exist.
+  if (!vscode.workspace.getConfiguration().has("tasks")) {
+    build.updateBuildTasks();
+  }
 }
 
 /**
