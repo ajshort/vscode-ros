@@ -72,7 +72,7 @@ export function getPackages(): Promise<{ [name: string]: string }> {
  * Gets the full path to any executables for a package.
  */
 export function findPackageExecutables(packageName: string): Promise<string[]> {
-  const dirs = `catkin_find --without-underlays --libexec --share "${packageName}"`;
+  const dirs = `catkin_find --without-underlays --libexec --share '${packageName}'`;
   const command = `find $(${dirs}) -type f -executable`;
 
   return new Promise((c, e) => cp.exec(command, { env: extension.env }, (err, out) =>
@@ -81,10 +81,13 @@ export function findPackageExecutables(packageName: string): Promise<string[]> {
 }
 
 /**
- * Finds all `.launch` files in a directory.
+ * Finds all `.launch` files for a package..
  */
-export function findLaunchFiles(dir: string): Promise<string[]> {
-  return new Promise((c, e) => cp.exec(`find '${dir}' -type f -name *.launch`, (err, out) => {
+export function findPackageLaunchFiles(packageName: string): Promise<string[]> {
+  const dirs = `catkin_find --without-underlays --share '${packageName}'`;
+  const command = `find $(${dirs}) -type f -name *.launch`;
+
+  return new Promise((c, e) => cp.exec(command, { env: extension.env }, (err, out) => {
     err ? e(err) : c(out.trim().split("\n"));
   }));
 }

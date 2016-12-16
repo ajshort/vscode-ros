@@ -25,10 +25,8 @@ export async function provideInitialConfigurations() {
     let basenames = (files: string[]) => files.map(file => basename(file));
 
     if (command === "roslaunch") {
-      const path = (await packages)[packageName];
-      const executables = utils.findLaunchFiles(path).then(basenames);
-
-      target = await vscode.window.showQuickPick(executables, { placeHolder: "Launch file" });
+      const launches = utils.findPackageLaunchFiles(packageName).then(basenames);
+      target = await vscode.window.showQuickPick(launches, { placeHolder: "Launch file" });
     } else {
       const executables = utils.findPackageExecutables(packageName).then(basenames);
       target = await vscode.window.showQuickPick(executables, { placeHolder: "Executable" });
