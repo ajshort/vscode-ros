@@ -24,6 +24,11 @@
     "commands": [
       {
         "category": "ROS",
+        "command": "ros.createLaunchConfiguration",
+        "title": "Create Launch Configuration"
+      },
+      {
+        "category": "ROS",
         "command": "ros.showMasterStatus",
         "title": "Show Master Status"
       },
@@ -48,6 +53,53 @@
         }
       }
     },
+    "debuggers": [
+      {
+        "type": "ros",
+        "label": "ROS",
+        "program": "./out/src/debugger/main.js",
+        "runtime": "node",
+        "variables": {
+          "debugSettings": "ros.getDebugSettings"
+        },
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "command",
+              "package",
+              "target"
+            ],
+            "properties": {
+              "command": {
+                "type": "string",
+                "description": "Whether to run a launch file or executable",
+                "enum": [
+                  "roslaunch",
+                  "rosrun"
+                ],
+                "default": "roslaunch"
+              },
+              "package": {
+                "type": "string",
+                "description": "The package name",
+                "default": ""
+              },
+              "target": {
+                "type": "string",
+                "description": "The launch file or executable name",
+                "default": ""
+              },
+              "debugSettings": {
+                "type": "string",
+                "description": "The stringified debug settings",
+                "default": "${command.debugSettings}"
+              }
+            }
+          }
+        },
+        "initialConfigurations": "ros.provideInitialConfigurations"
+      }
+    ],
     "languages": [
       {
         "id": "xml",
@@ -74,6 +126,8 @@
   },
   "dependencies": {
     "underscore": "^1.8.3",
+    "vscode-debugadapter": "^1.15.0",
+    "vscode-debugprotocol": "^1.15.0",
     "xmlrpc": "^1.3.2"
   },
   "devDependencies": {

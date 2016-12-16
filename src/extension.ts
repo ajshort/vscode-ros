@@ -1,5 +1,6 @@
 import * as constants from "./constants";
 import CppFormatter from "./cpp-formatter";
+import * as debug from "./debug";
 import * as master from "./master";
 import * as pfs from "./promise-fs";
 import * as utils from "./utils";
@@ -99,6 +100,7 @@ function activateEnvironment() {
 
   // Register commands.
   subscriptions.push(
+    vscode.commands.registerCommand(constants.CMD_GET_DEBUG_SETTINGS, debug.getDebugSettings),
     vscode.commands.registerCommand(constants.CMD_SHOW_MASTER_STATUS, master.showMasterStatus),
     vscode.commands.registerCommand(constants.CMD_START_CORE, master.startCore),
     vscode.commands.registerCommand(constants.CMD_STOP_CORE, () => master.stopCore(masterApi))
