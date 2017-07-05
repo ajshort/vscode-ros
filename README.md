@@ -3,9 +3,85 @@
 This [Visual Studio Code (VSCode)][vscode] extension provides support for [Robot Operating System (ROS)][ros]
 development.
 
+* [Repository][repo]
+* [Issues][issues]
+
+## Getting Started
+
+The extension will automatically start when you open a catkin workspace, or a folder which is inside a catkin workspace.
+The ROS distro will automatically be confirmed from the parent environment, or you will be prompted to select a ROS
+distro if this can't be done automatically.
+
+To start ROS master, use the "ROS: Start Core" command. The "ROS master" indicator in the bottom left will show if the
+master is currently running, and you can click on this to view parameters etc. If you hit F5 you can create a debug
+configuration to run a `rosrun` or `roslaunch` command.
+
+The first time you open the workspace the extension will automatically create a `catkin_make` build task and update the
+C++ and Python paths. You can re-run this process later using the appropriate commands.
+
+## Features
+
+* Automatic ROS environment configuration.
+* Allows starting, stopping and viewing the ROS master status.
+* Run `catkin_make` using standard build command.
+* Create catkin packages.
+* Run `rosrun` or `roslaunch`
+* Syntax highlighting for `.msg`, `.urdf` and other ROS files.
+* Automatically add the ROS C++ include and Python import paths.
+* Format C++ using the ROS `clang-format` style.
+
 ## Commands
 
-* `ros.showMasterStatus`: Opens an editor view showing master parameters, topics and services.
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Command</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Create Catkin Package</td>
+      <td><code>ros.createCatkinPackage</code></td>
+      <td>
+        Create a catkin package. You can right click on a folder in the explorer to create it in a specific location.
+      </td>
+    </tr>
+    <tr>
+      <td>Show Master Status</td>
+      <td><code>ros.showMasterStatus</code></td>
+      <td>Open a detail view showing details about the ROS master.</td>
+    </tr>
+    <tr>
+      <td>Start Core</td>
+      <td><code>ros.startCore</code></td>
+      <td>Spawn a ROS core</td>
+    </tr>
+    <tr>
+      <td>Stop Core</td>
+      <td><code>ros.stopCore</code></td>
+      <td>Kill the ROS core</td>
+    </tr>
+    <tr>
+      <td>Update Build Tasks</td>
+      <td><code>ros.updateBuildTasks</code></td>
+      <td>Generate a build task to run <code>catkin_make</code> in a ROS environment.</td>
+    </tr>
+    <tr>
+      <td>Update C++ Properties</td>
+      <td><code>ros.updateCppProperties</code></td>
+      <td>Update the C++ include path to include ROS.</td>
+    </tr>
+    <tr>
+      <td>Update Python Path</td>
+      <td><code>ros.updatePythonPath</code></td>
+      <td>Update the Python path to include ROS.</td>
+    </tr>
+  </tbody>
+</table>
 
+[issues]: https://github.com/ajshort/vscode-ros/issues
+[repo]: https://github.com/ajshort/vscode-ros
 [ros]: http://ros.org
 [vscode]: https://code.visualstudio.com
