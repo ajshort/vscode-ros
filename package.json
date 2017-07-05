@@ -112,7 +112,7 @@
               "debugSettings": {
                 "type": "string",
                 "description": "The stringified debug settings",
-                "default": "${command.debugSettings}"
+                "default": "${command:debugSettings}"
               }
             }
           }
@@ -127,7 +127,7 @@
               "name": "",
               "package": "",
               "target": ".launch",
-              "debugSettings": "${command.debugSettings}"
+              "debugSettings": "${command:debugSettings}"
             }
           },
           {
@@ -139,7 +139,7 @@
               "name": "",
               "package": "",
               "target": "",
-              "debugSettings": "${command.debugSettings}"
+              "debugSettings": "${command:debugSettings}"
             }
           }
         ],
