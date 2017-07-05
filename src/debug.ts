@@ -39,7 +39,7 @@ export async function provideInitialConfigurations() {
     configurations: [
       {
         command,
-        debugSettings: "${command.debugSettings}",
+        debugSettings: "${command:debugSettings}",
         name: target,
         package: packageName,
         type: "ros",
