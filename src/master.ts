@@ -53,11 +53,11 @@ export class XmlRpcApi {
   }
 
   public getSystemState(): Promise<ISystemState> {
-    return this.methodCall("getSystemState").then(res => ({
+    return this.methodCall("getSystemState").then(res => <ISystemState> {
       publishers: _.object(res[0]),
       services: _.object(res[2]),
       subscribers: _.object(res[1]),
-    }));
+    });
   }
 
   public getParamNames(): Promise<string[]> {
@@ -68,7 +68,7 @@ export class XmlRpcApi {
     return this.methodCall("getParam", name);
   }
 
-  private methodCall(method: string, ...args: any[]) {
+  private methodCall(method: string, ...args: any[]): Promise<any> {
     return new Promise((resolve, reject) => {
       this.client.methodCall(method, [CALLER_ID, ...args], (err, val) => {
         if (err) {
