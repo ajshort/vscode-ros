@@ -1,5 +1,6 @@
 import * as build from "./build";
 import * as catkin from "./catkin";
+import CatkinTaskProvider from "./catkin-task-provider";
 import * as constants from "./constants";
 import CppFormatter from "./cpp-formatter";
 import * as debug from "./debug";
@@ -99,6 +100,7 @@ function activateEnvironment() {
 
   subscriptions.push(masterStatusItem);
   subscriptions.push(vscode.workspace.registerTextDocumentContentProvider("ros-master", masterStatusProvider));
+  subscriptions.push(vscode.workspace.registerTaskProvider("catkin", new CatkinTaskProvider()));
 
   // Register commands.
   subscriptions.push(
@@ -108,7 +110,6 @@ function activateEnvironment() {
     vscode.commands.registerCommand(constants.CMD_SHOW_MASTER_STATUS, master.showMasterStatus),
     vscode.commands.registerCommand(constants.CMD_START_CORE, master.startCore),
     vscode.commands.registerCommand(constants.CMD_STOP_CORE, () => master.stopCore(masterApi)),
-    vscode.commands.registerCommand(constants.CMD_UPDATE_BUILD_TASKS, build.updateBuildTasks),
     vscode.commands.registerCommand(constants.CMD_UPDATE_CPP_PROPERTIES, build.updateCppProperties),
     vscode.commands.registerCommand(constants.CMD_UPDATE_PYTHON_PATH, build.updatePythonPath),
   );

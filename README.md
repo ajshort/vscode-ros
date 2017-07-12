@@ -23,7 +23,7 @@ C++ and Python paths. You can re-run this process later using the appropriate co
 
 * Automatic ROS environment configuration.
 * Allows starting, stopping and viewing the ROS master status.
-* Run `catkin_make` using standard build command.
+* Automatically discover `catkin_make` build tasks.
 * Create catkin packages.
 * Run `rosrun` or `roslaunch`
 * Syntax highlighting for `.msg`, `.urdf` and other ROS files.
@@ -62,11 +62,6 @@ C++ and Python paths. You can re-run this process later using the appropriate co
       <td>Stop Core</td>
       <td><code>ros.stopCore</code></td>
       <td>Kill the ROS core</td>
-    </tr>
-    <tr>
-      <td>Update Build Tasks</td>
-      <td><code>ros.updateBuildTasks</code></td>
-      <td>Generate a build task to run <code>catkin_make</code> in a ROS environment.</td>
     </tr>
     <tr>
       <td>Update C++ Properties</td>
