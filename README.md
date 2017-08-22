@@ -12,7 +12,7 @@ The extension will automatically start when you open a catkin workspace, or a fo
 The ROS distro will automatically be confirmed from the parent environment, or you will be prompted to select a ROS
 distro if this can't be done automatically.
 
-** You must build the catkin workspace at least once before the extension will recognise it. **
+> You must build the catkin workspace at least once before the extension will recognise it.
 
 To start ROS master, use the "ROS: Start Core" command. The "ROS master" indicator in the bottom left will show if the
 master is currently running, and you can click on this to view parameters etc. If you hit F5 you can create a debug
