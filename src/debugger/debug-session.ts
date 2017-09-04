@@ -30,7 +30,7 @@ export default class DebugSession extends adapter.DebugSession {
     // Merge the ROS env with the current env so we aren't running in headless mode.
     const settings = JSON.parse(request.debugSettings);
     const env = Object.assign(process.env, settings.env || process.env);
-    const args = [request.package, request.target].concat(request.args);
+    const args = [request.package, request.target].concat(request.args || []);
 
     this.process = cp.spawn(request.command, args, { env });
 
