@@ -27,7 +27,7 @@ C++ and Python paths. You can re-run this process later using the appropriate co
 * Allows starting, stopping and viewing the ROS master status.
 * Automatically discover `catkin_make` build tasks.
 * Create catkin packages.
-* Run `rosrun` or `roslaunch`
+* Run `rosrun` or `roslaunch` (breakpoints currently not supported).
 * Syntax highlighting for `.msg`, `.urdf` and other ROS files.
 * Automatically add the ROS C++ include and Python import paths.
 * Format C++ using the ROS `clang-format` style.
