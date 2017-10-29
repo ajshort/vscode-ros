@@ -44,11 +44,6 @@
       },
       {
         "category": "ROS",
-        "command": "ros.updateBuildTasks",
-        "title": "Update Build Tasks"
-      },
-      {
-        "category": "ROS",
         "command": "ros.updateCppProperties",
         "title": "Update C++ Properties"
       },
