@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+* Add support for catkin tools alongside catkin_make (thanks to @JamesGiller).
+* Remove some unimplemented commands.
+
 ## 0.1.0
 
 * Require vscode 1.14
