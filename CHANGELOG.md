@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0
 
 * Require VSCode 1.18.
 * Add support for catkin tools alongside catkin_make (thanks to @JamesGiller).
