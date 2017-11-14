@@ -86,3 +86,10 @@ export function findPackageLaunchFiles(packageName: string): Promise<string[]> {
     err ? e(err) : c(out.trim().split("\n"));
   }));
 }
+
+/**
+ * Creates and shows a ROS-sourced terminal.
+ */
+export function createTerminal() {
+  vscode.window.createTerminal({ name: 'ROS', env: extension.env }).show();
+}

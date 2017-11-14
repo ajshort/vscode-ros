@@ -53,6 +53,11 @@ C++ and Python paths. You can re-run this process later using the appropriate co
       </td>
     </tr>
     <tr>
+      <td>Create Terminal</td>
+      <td><code>ros.createTerminal</code></td>
+      <td>Create a terminal with ROS sourced.</td>
+    </tr>
+    <tr>
       <td>Show Master Status</td>
       <td><code>ros.showMasterStatus</code></td>
       <td>Open a detail view showing details about the ROS master.</td>
