@@ -24,10 +24,18 @@ export async function createPackage(uri?: vscode.Uri) {
     return;
   }
 
-  const cwd = typeof uri !== "undefined" ? uri.fsPath : vscode.workspace.rootPath;
+  const cwd = typeof uri !== "undefined" ? uri.fsPath : `${extension.baseDir}/src`;
   const opts = { cwd, env: extension.env };
 
-  cp.exec(`catkin_create_pkg ${name} ${dependencies}`, opts, (err, stdout, stderr) => {
+  let createPkgCommand: string;
+
+  if (extension.buildSystem === extension.BuildSystem.CatkinMake) {
+    createPkgCommand = `catkin_create_pkg ${name} ${dependencies}`;
+  } else if (extension.buildSystem === extension.BuildSystem.CatkinTools) {
+    createPkgCommand = `catkin create pkg --catkin-deps ${dependencies} -- ${name}`;
+  }
+
+  cp.exec(createPkgCommand, opts, (err, stdout, stderr) => {
     if (!err) {
       vscode.workspace.openTextDocument(`${cwd}/${name}/package.xml`).then(vscode.window.showTextDocument);
     } else {

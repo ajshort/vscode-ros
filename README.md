@@ -8,7 +8,9 @@ development.
 
 ## Getting Started
 
-The extension will automatically start when you open a catkin workspace, or a folder which is inside a catkin workspace.
+The extension will automatically start when you open a catkin workspace.
+The build system (e.g. catkin_make or catkin build) will automatically be confirmed from the hidden files associated with
+each system.
 The ROS distro will automatically be confirmed from the parent environment, or you will be prompted to select a ROS
 distro if this can't be done automatically.
 
@@ -18,15 +20,15 @@ To start ROS master, use the "ROS: Start Core" command. The "ROS master" indicat
 master is currently running, and you can click on this to view parameters etc. If you hit F5 you can create a debug
 configuration to run a `rosrun` or `roslaunch` command.
 
-The first time you open the workspace the extension will automatically create a `catkin_make` build task and update the
+The first time you open the workspace the extension will automatically create build and test tasks and update the
 C++ and Python paths. You can re-run this process later using the appropriate commands.
 
 ## Features
 
 * Automatic ROS environment configuration.
 * Allows starting, stopping and viewing the ROS master status.
-* Automatically discover `catkin_make` build tasks.
-* Create catkin packages.
+* Automatically discover `catkin_make` or `catkin build` build tasks.
+* Create catkin packages using `catkin_create_pkg` script or `catkin create pkg`.
 * Run `rosrun` or `roslaunch` (breakpoints currently not supported).
 * Syntax highlighting for `.msg`, `.urdf` and other ROS files.
 * Automatically add the ROS C++ include and Python import paths.

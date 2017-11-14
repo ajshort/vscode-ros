@@ -7,6 +7,7 @@ import * as debug from "./debug";
 import * as master from "./master";
 import * as pfs from "./promise-fs";
 import * as utils from "./utils";
+import { dirname } from "path";
 import * as vscode from "vscode";
 
 let context: vscode.ExtensionContext;
@@ -15,6 +16,13 @@ let context: vscode.ExtensionContext;
  * The catkin workspace base dir.
  */
 export let baseDir: string;
+
+export enum BuildSystem { None, CatkinMake, CatkinTools };
+
+/**
+ * The build system in use.
+ */
+export let buildSystem: BuildSystem;
 
 /**
  * The sourced ROS environment.
@@ -31,16 +39,19 @@ export let onDidChangeEnv = onEnvChanged.event;
 /**
  * Subscriptions to dispose when the environment is changed.
  */
-let subscriptions = <vscode.Disposable[]> [];
+let subscriptions = <vscode.Disposable[]>[];
 
 export async function activate(ctx: vscode.ExtensionContext) {
   // Activate if we're in a catkin workspace.
   context = ctx;
-  baseDir = await utils.findCatkinWorkspace(vscode.workspace.rootPath);
 
-  if (!baseDir) {
+  await determineBuildSystem(vscode.workspace.rootPath);
+
+  if (buildSystem == BuildSystem.None) {
     return;
   }
+
+  console.log(`Activating ROS extension in "${baseDir}"`);
 
   // Activate components when the ROS env is changed.
   context.subscriptions.push(onDidChangeEnv(activateEnvironment));
@@ -76,6 +87,30 @@ export async function activate(ctx: vscode.ExtensionContext) {
 
 export function deactivate() {
   subscriptions.forEach(disposable => disposable.dispose());
+}
+
+/**
+ * Determines build system and workspace path in use by checking for unique
+ * auto-generated files.
+ */
+async function determineBuildSystem(dir: string): Promise<void> {
+  while (dir && dirname(dir) !== dir) {
+    if (await pfs.exists(`${dir}/.catkin_workspace`)) {
+      baseDir = dir;
+      buildSystem = BuildSystem.CatkinMake;
+
+      return;
+    } else if (await pfs.exists(`${dir}/.catkin_tools`)) {
+      baseDir = dir;
+      buildSystem = BuildSystem.CatkinTools;
+
+      return;
+    }
+
+    dir = dirname(dir);
+  }
+
+  buildSystem = BuildSystem.None;
 }
 
 /**
