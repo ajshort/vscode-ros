@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* Automatically add workspace package include dirs to the include path.
+
 ## 0.2.0
 
 * Require VSCode 1.18.

@@ -19,6 +19,10 @@ export function readdir(path: string): Promise<string[]> {
   return call(fs.readdir, path);
 }
 
+export function mkdir(path: string): Promise<void> {
+  return call(fs.mkdir, path);
+}
+
 export function writeFile(filename: string, data: any): Promise<void> {
   return call(fs.writeFile, filename, data);
 }
