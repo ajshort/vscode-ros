@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0
 
 * Automatically add workspace package include dirs to the include path.
 * Fix debug configuration creation.

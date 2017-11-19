@@ -3,7 +3,7 @@
   "displayName": "ROS",
   "icon": "assets/icon.png",
   "description": "Development support for Robot Operating System (ROS)",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "ajshort",
   "license": "MIT",
   "repository": {
