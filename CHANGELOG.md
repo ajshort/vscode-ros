@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Automatically add workspace package include dirs to the include path.
+* Fix debug configuration creation.
 
 ## 0.2.0
 

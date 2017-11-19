@@ -14,6 +14,7 @@
     "vscode": "^1.18.0"
   },
   "categories": [
+    "Debuggers",
     "Other"
   ],
   "activationEvents": [
@@ -142,8 +143,7 @@
               "debugSettings": "${command:debugSettings}"
             }
           }
-        ],
-        "initialConfigurations": "ros.provideInitialConfigurations"
+        ]
       }
     ],
     "languages": [

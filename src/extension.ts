@@ -136,13 +136,13 @@ function activateEnvironment() {
   subscriptions.push(masterStatusItem);
   subscriptions.push(vscode.workspace.registerTextDocumentContentProvider("ros-master", masterStatusProvider));
   subscriptions.push(vscode.workspace.registerTaskProvider("catkin", new CatkinTaskProvider()));
+  subscriptions.push(vscode.debug.registerDebugConfigurationProvider("ros", new debug.RosDebugConfigProvider()));
 
   // Register commands.
   subscriptions.push(
     vscode.commands.registerCommand(constants.CMD_CREATE_CATKIN_PACKAGE, catkin.createPackage),
     vscode.commands.registerCommand(constants.CMD_CREATE_TERMINAL, utils.createTerminal),
     vscode.commands.registerCommand(constants.CMD_GET_DEBUG_SETTINGS, debug.getDebugSettings),
-    vscode.commands.registerCommand(constants.CMD_PROVIDE_INITIAL_CONFIGURATIONS, debug.provideInitialConfigurations),
     vscode.commands.registerCommand(constants.CMD_SHOW_MASTER_STATUS, master.showMasterStatus),
     vscode.commands.registerCommand(constants.CMD_START_CORE, master.startCore),
     vscode.commands.registerCommand(constants.CMD_STOP_CORE, () => master.stopCore(masterApi)),
