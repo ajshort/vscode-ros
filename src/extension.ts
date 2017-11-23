@@ -10,8 +10,6 @@ import * as utils from "./utils";
 import { dirname } from "path";
 import * as vscode from "vscode";
 
-let context: vscode.ExtensionContext;
-
 /**
  * The catkin workspace base dir.
  */
@@ -41,10 +39,8 @@ export let onDidChangeEnv = onEnvChanged.event;
  */
 let subscriptions = <vscode.Disposable[]>[];
 
-export async function activate(ctx: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   // Activate if we're in a catkin workspace.
-  context = ctx;
-
   await determineBuildSystem(vscode.workspace.rootPath);
 
   if (buildSystem == BuildSystem.None) {
@@ -54,7 +50,7 @@ export async function activate(ctx: vscode.ExtensionContext) {
   console.log(`Activating ROS extension in "${baseDir}"`);
 
   // Activate components when the ROS env is changed.
-  context.subscriptions.push(onDidChangeEnv(activateEnvironment));
+  context.subscriptions.push(onDidChangeEnv(activateEnvironment.bind(null, context)));
 
   // Activate components which don't require the ROS env.
   context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(
@@ -116,7 +112,7 @@ async function determineBuildSystem(dir: string): Promise<void> {
 /**
  * Activates components which require a ROS env.
  */
-function activateEnvironment() {
+function activateEnvironment(context: vscode.ExtensionContext) {
   // Clear existing disposables.
   while (subscriptions.length > 0) {
     subscriptions.pop().dispose();
