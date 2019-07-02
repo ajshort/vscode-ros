@@ -6,7 +6,7 @@ development.
 * [Repository][repo]
 * [Issues][issues]
 
-**Note:** A newer version of this extension has been published as [`ms-iot.vscode-ros`](https://marketplace.visualstudio.com/items?itemName=ms-iot.vscode-ros). You could choose to uninstall this extension and install the new one.
+**Note:** A newer version of this extension has been published as [`ms-iot.vscode-ros`](https://marketplace.visualstudio.com/items?itemName=ms-iot.vscode-ros). Please uninstall this extension and install the new one.
 
 ## Getting Started
 
