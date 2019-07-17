@@ -1,12 +1,12 @@
-# ROS VSCode Extension
+# ROS VSCode Extension (Deprecated)
+
+**Note:** A newer version of this extension has been published as [`ms-iot.vscode-ros`](https://marketplace.visualstudio.com/items?itemName=ms-iot.vscode-ros). Please uninstall this extension and install the new one.
 
 This [Visual Studio Code (VSCode)][vscode] extension provides support for [Robot Operating System (ROS)][ros]
 development.
 
 * [Repository][repo]
 * [Issues][issues]
-
-**Note:** A newer version of this extension has been published as [`ms-iot.vscode-ros`](https://marketplace.visualstudio.com/items?itemName=ms-iot.vscode-ros). Please uninstall this extension and install the new one.
 
 ## Getting Started
 

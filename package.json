@@ -1,9 +1,9 @@
 {
   "name": "ros",
-  "displayName": "ROS",
+  "displayName": "ROS (deprecated)",
   "icon": "assets/icon.png",
   "description": "Development support for Robot Operating System (ROS)",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "publisher": "ajshort",
   "license": "MIT",
   "repository": {
